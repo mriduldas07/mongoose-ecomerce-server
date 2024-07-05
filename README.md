@@ -1,4 +1,4 @@
-# Ecommerce Server
+# Project name: Ecommerce Server
 # Getting Started
  ## Prerequisites
    - Node.js
