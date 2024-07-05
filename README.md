@@ -6,8 +6,8 @@
 ## Installation
   1. Clone the repository
   ```
-    git clone https://github.com/mriduldas07/task-taker.git
-    cd task-taker
+    git clone https://github.com/mriduldas07/mongoose-ecomerce-server.git
+    cd mongoose-ecomerce-server
   ```
   2. Install dependencies
   ```
