@@ -19,3 +19,10 @@ export type IProduct = {
 
 // product model type define
 export type IProductModel = Model<IProduct, object>;
+
+// product filters
+export type IProductFilters = {
+  searchTerm?: string;
+  name?: string;
+  tags?: string[];
+};

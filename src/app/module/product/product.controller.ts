@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
+import pick from "../../utils/pick";
+import { productFilterableFields } from "./product.constant";
 import { ProductServices } from "./product.services";
 
 const createProduct = async (
@@ -27,7 +29,9 @@ const getAllProducts = async (
   next: NextFunction
 ) => {
   try {
-    const result = await ProductServices.getAllProducts();
+    const filters = pick(req.query, productFilterableFields);
+
+    const result = await ProductServices.getAllProducts(filters);
 
     res.status(httpStatus.OK).json({
       success: true,

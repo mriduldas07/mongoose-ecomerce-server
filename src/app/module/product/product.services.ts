@@ -1,12 +1,32 @@
-import { IProduct } from "./product.interface";
+import { productSearchableFields } from "./product.constant";
+import { IProduct, IProductFilters } from "./product.interface";
 import { Product } from "./product.model";
 
 const createProduct = async (payload: IProduct): Promise<IProduct> => {
   const result = await Product.create(payload);
   return result;
 };
-const getAllProducts = async (): Promise<IProduct[]> => {
-  const result = await Product.find();
+const getAllProducts = async (
+  filters: IProductFilters
+): Promise<IProduct[]> => {
+  const { searchTerm } = filters;
+
+  const andConditions = [];
+  if (searchTerm) {
+    andConditions.push({
+      $or: productSearchableFields.map((field) => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: "i",
+        },
+      })),
+    });
+  }
+
+  const whereConditions =
+    andConditions.length > 0 ? { $and: andConditions } : {};
+
+  const result = await Product.find(whereConditions);
   return result;
 };
 const getSingleProduct = async (id: string): Promise<IProduct | null> => {
