@@ -1,17 +1,25 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import { ProductServices } from "./product.services";
 
-const createProduct = async (req: Request, res: Response) => {
-  const { ...productData } = req.body;
+const createProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { ...productData } = req.body;
 
-  const result = await ProductServices.createProduct(productData);
+    const result = await ProductServices.createProduct(productData);
 
-  res.status(httpStatus.CREATED).json({
-    success: true,
-    message: "Product created successfully!",
-    data: result,
-  });
+    res.status(httpStatus.CREATED).json({
+      success: true,
+      message: "Product created successfully!",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 const getAllProducts = async (req: Request, res: Response) => {
   const result = await ProductServices.getAllProducts();
