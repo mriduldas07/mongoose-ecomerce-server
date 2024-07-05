@@ -9,6 +9,8 @@ router.post("/", ProductController.createProduct);
 router.get("/:productId", ProductController.getSingleProduct);
 // product data update
 router.put("/:productId", ProductController.updateProduct);
+// product data delete
+router.delete("/:productId", ProductController.deleteProduct);
 // get all products
 router.get("/", ProductController.getAllProducts);
 

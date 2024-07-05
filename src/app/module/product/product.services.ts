@@ -23,9 +23,15 @@ const updateProduct = async (
   return result;
 };
 
+const deleteProduct = async (id: string): Promise<IProduct | null> => {
+  const result = await Product.findByIdAndDelete(id);
+  return result;
+};
+
 export const ProductServices = {
   createProduct,
   getAllProducts,
   getSingleProduct,
   updateProduct,
+  deleteProduct,
 };
