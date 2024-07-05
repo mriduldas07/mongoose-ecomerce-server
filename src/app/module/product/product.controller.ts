@@ -21,54 +21,86 @@ const createProduct = async (
     next(error);
   }
 };
-const getAllProducts = async (req: Request, res: Response) => {
-  const result = await ProductServices.getAllProducts();
+const getAllProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const result = await ProductServices.getAllProducts();
 
-  res.status(httpStatus.OK).json({
-    success: true,
-    message: "Products fetched successfully!",
-    data: result,
-  });
-};
-const getSingleProduct = async (req: Request, res: Response) => {
-  const productId = req.params.productId;
-  const result = await ProductServices.getSingleProduct(productId);
-
-  res.status(httpStatus.OK).json({
-    success: true,
-    message: "Products fetched successfully!",
-    data: result,
-  });
-};
-const updateProduct = async (req: Request, res: Response) => {
-  const productId = req.params.productId;
-  const { inventory, ...others } = req.body;
-  const updatedData = { ...others };
-
-  if (inventory && Object.keys(inventory).length > 0) {
-    Object.keys(inventory).forEach((key) => {
-      const inventoryKey = `inventory.${key}`;
-      updatedData[inventoryKey] = inventory[key];
+    res.status(httpStatus.OK).json({
+      success: true,
+      message: "Products fetched successfully!",
+      data: result,
     });
+  } catch (error) {
+    next(error);
   }
-  const result = await ProductServices.updateProduct(updatedData, productId);
+};
+const getSingleProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const productId = req.params.productId;
+    const result = await ProductServices.getSingleProduct(productId);
 
-  res.status(httpStatus.OK).json({
-    success: true,
-    message: "Products updated successfully!",
-    data: result,
-  });
+    res.status(httpStatus.OK).json({
+      success: true,
+      message: "Products fetched successfully!",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+const updateProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const productId = req.params.productId;
+    const { inventory, ...others } = req.body;
+    const updatedData = { ...others };
+
+    if (inventory && Object.keys(inventory).length > 0) {
+      Object.keys(inventory).forEach((key) => {
+        const inventoryKey = `inventory.${key}`;
+        updatedData[inventoryKey] = inventory[key];
+      });
+    }
+    const result = await ProductServices.updateProduct(updatedData, productId);
+
+    res.status(httpStatus.OK).json({
+      success: true,
+      message: "Products updated successfully!",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
-const deleteProduct = async (req: Request, res: Response) => {
-  const productId = req.params.productId;
-  const result = await ProductServices.deleteProduct(productId);
+const deleteProduct = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const productId = req.params.productId;
+    const result = await ProductServices.deleteProduct(productId);
 
-  res.status(httpStatus.OK).json({
-    success: true,
-    message: "Product deleted successfully!",
-    data: result,
-  });
+    res.status(httpStatus.OK).json({
+      success: true,
+      message: "Product deleted successfully!",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const ProductController = {
