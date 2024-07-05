@@ -49,11 +49,11 @@ app.get("/", (req, res) => {
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.NOT_FOUND).json({
     success: false,
-    message: "Not found!!!",
+    message: "Route Not found!!!",
     errorMessages: [
       {
         path: req.originalUrl,
-        message: "Api not found",
+        message: "Route not found",
       },
     ],
   });
